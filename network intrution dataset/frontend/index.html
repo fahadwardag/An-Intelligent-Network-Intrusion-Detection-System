@@ -1,0 +1,1142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>SecureGuard AI | Security Analytics</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<style>
+  
+:root {
+  --bg: #090f1c;
+  --sidebar: #0e1728;
+  --panel: #121e31;
+  --border: #25334a;
+  --primary: #38bdf8;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --green: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 245px;
+  flex-shrink: 0;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  padding: 26px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px 32px;
+}
+
+.brand-icon {
+  font-size: 28px;
+}
+
+.brand h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.brand small {
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+nav {
+  display: grid;
+  gap: 8px;
+}
+
+.nav-link {
+  width: 100%;
+  text-align: left;
+  color: var(--muted);
+  background: transparent;
+  border: 0;
+  padding: 14px;
+  border-radius: 9px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #1b304b;
+  color: var(--primary);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 16px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sidebar-bottom p {
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  margin-right: 8px;
+}
+
+/* Main layout */
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 32px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  color: var(--primary);
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+h1 {
+  font-size: 30px;
+  margin: 9px 0 0;
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+p {
+  color: var(--muted);
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-pill {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.primary-btn,
+.secondary-btn {
+  border-radius: 8px;
+  padding: 10px 16px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.primary-btn {
+  color: #08111e;
+  background: var(--primary);
+  border: 0;
+  font-weight: 600;
+}
+
+.secondary-btn {
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.notice {
+  padding: 17px 20px;
+  border: 1px solid #27617a;
+  background: #0d293a;
+  border-radius: 12px;
+  margin-bottom: 22px;
+}
+
+.notice p {
+  margin: 7px 0 0;
+  font-size: 13px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card, .panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.stat-card {
+  padding: 22px;
+}
+
+.stat-card span,
+.stat-card small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stat-card h2 {
+  font-size: 28px;
+  margin: 14px 0 9px;
+  color: var(--primary);
+  overflow-wrap: anywhere;
+}
+
+.panel {
+  padding: 23px;
+  min-width: 0;
+  margin-bottom: 18px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.panel-header p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.graphs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.graphs-grid img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  background: white;
+  margin-top: 18px;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* Tables */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+th {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+tr:hover td {
+  background: #1a2a42;
+}
+
+/* Charts */
+.bar-chart {
+  display: grid;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.bar-item {
+  display: grid;
+  grid-template-columns: 125px minmax(0, 1fr) 65px;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+
+.bar-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 12px;
+  border-radius: 20px;
+  background: #25334a;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  border-radius: 20px;
+}
+
+.bar-value {
+  text-align: right;
+  font-weight: 600;
+}
+
+select {
+  background: #1a2a42;
+  color: white;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.dataset-stats {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 20px;
+}
+
+.alert {
+  background: #461e29;
+  border: 1px solid #e05265;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .panel-grid, .graphs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 14px;
+  }
+
+  .sidebar nav {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .nav-link {
+    white-space: nowrap;
+    width: auto;
+  }
+
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .main {
+    padding: 18px;
+  }
+
+  .bar-item {
+    grid-template-columns: 85px minmax(0, 1fr) 55px;
+    gap: 7px;
+  }
+}
+
+</style>
+<body>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">🛡️</span>
+      <div>
+        <h2>SecureGuard AI</h2>
+        <small>SECURITY ANALYTICS</small>
+      </div>
+    </div>
+
+    <nav>
+      <button class="nav-link active"
+              data-page="overview">◈ Overview</button>
+      <button class="nav-link"
+              data-page="models">▥ Model Comparison</button>
+      <button class="nav-link"
+              data-page="graphs">▤ Evaluation Graphs</button>
+      <button class="nav-link"
+              data-page="dataset">▦ Dataset Explorer</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <span class="status-dot"></span>
+      <span>Portfolio Demo</span>
+      <p>Synthetic dataset · Not live monitoring</p>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">CYBERSECURITY / ANALYTICS</span>
+        <h1 id="page-title">Security Overview</h1>
+      </div>
+      <div class="top-actions">
+        <span id="api-status" class="status-pill">Connecting...</span>
+        <button class="primary-btn" id="refresh-btn">
+          ↻ Refresh
+        </button>
+      </div>
+    </header>
+
+    <div id="error-message" class="alert hidden"></div>
+
+    <!-- Overview -->
+    <section id="overview" class="page active">
+
+      <div class="notice">
+        <strong>Educational AI Demonstration</strong>
+        <p>
+          Results are calculated from synthetic network traffic.
+          This application does not monitor real networks.
+        </p>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span>Dataset Records</span>
+          <h2 id="total-records">--</h2>
+          <small>Network traffic samples</small>
+        </div>
+        <div class="stat-card">
+          <span>Models Evaluated</span>
+          <h2 id="total-models">--</h2>
+          <small>Machine learning and deep learning</small>
+        </div>
+        <div class="stat-card">
+          <span>Highest Accuracy</span>
+          <h2 id="best-accuracy">--</h2>
+          <small>On saved evaluation results</small>
+        </div>
+        <div class="stat-card">
+          <span>Top Accuracy Model</span>
+          <h2 id="best-model">--</h2>
+          <small>Best by reported accuracy</small>
+        </div>
+      </div>
+
+      <div class="panel-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Model Accuracy</h3>
+              <p>Comparison of evaluated algorithms</p>
+            </div>
+          </div>
+          <div id="overview-chart" class="bar-chart"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h3>Traffic Distribution</h3>
+              <p>Class distribution in the dataset</p>
+            </div>
+          </div>
+          <div id="traffic-chart" class="bar-chart"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Models -->
+    <section id="models" class="page">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h3>Model Performance Comparison</h3>
+            <p>Accuracy, Precision, Recall and F1-score</p>
+          </div>
+          <a href="/api/download/metrics"
+             class="secondary-btn">Download CSV</a>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1-score</th>
+              </tr>
+            </thead>
+            <tbody id="model-table"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Performance Visualization</h3>
+        <p>Select a metric to compare models</p>
+        <select id="metric-select">
+          <option value="accuracy">Accuracy</option>
+          <option value="precision">Precision</option>
+          <option value="recall">Recall</option>
+          <option value="f1">F1-score</option>
+        </select>
+        <div id="comparison-chart" class="bar-chart"></div>
+      </div>
+    </section>
+
+    <!-- Evaluation Graphs -->
+    <section id="graphs" class="page">
+      <div class="graphs-grid">
+        <div class="panel">
+          <h3>Accuracy Comparison</h3>
+          <img src="/api/graphs/model_accuracy.png"
+               alt="Model accuracy graph">
+        </div>
+        <div class="panel">
+          <h3>Model Metrics</h3>
+          <img src="/api/graphs/model_metrics.png"
+               alt="Model metrics graph">
+        </div>
+        <div class="panel">
+          <h3>Confusion Matrix</h3>
+          <img src="/api/graphs/confusion_matrix.png"
+               alt="Confusion matrix">
+        </div>
+        <div class="panel">
+          <h3>ANN Training Loss</h3>
+          <img src="/api/graphs/ann_loss.png"
+               alt="ANN training loss graph">
+        </div>
+      </div>
+    </section>
+
+    <!-- Dataset -->
+    <section id="dataset" class="page">
+      <div class="panel">
+        <h3>Dataset Explorer</h3>
+        <p>Preview of the first 20 network records</p>
+
+        <div class="stats-grid dataset-stats">
+          <div class="stat-card">
+            <span>Total Records</span>
+            <h2 id="dataset-rows">--</h2>
+          </div>
+          <div class="stat-card">
+            <span>Total Columns</span>
+            <h2 id="dataset-columns">--</h2>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead id="dataset-head"></thead>
+            <tbody id="dataset-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      SecureGuard AI © 2026 · Educational ML/DL Portfolio
+    </footer>
+
+  </main>
+</div>
+
+<script src="/script.js"></script>
+<script>
+  
+"use strict";
+
+// ========================================
+// SECUREGUARD AI - COMPLETE JAVASCRIPT
+// ========================================
+
+// FastAPI backend
+const API = "/api";
+
+let modelData = [];
+let datasetInfo = null;
+
+// ========================================
+// 1. HELPER FUNCTIONS
+// ========================================
+
+// Format accuracy, precision, recall and F1-score
+function formatPercent(value) {
+    if (value === null || value === undefined || value === "") {
+        return "N/A";
+    }
+
+    const number = Number(value);
+
+    if (!Number.isFinite(number)) {
+        return "N/A";
+    }
+
+    const percentage = number <= 1 ? number * 100 : number;
+
+    return percentage.toFixed(2) + "%";
+}
+
+// Update text in HTML
+function setText(id, value) {
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+// ========================================
+// 2. API CONNECTION
+// ========================================
+
+async function getJSON(endpoint) {
+    const url = `${API}${endpoint}`;
+
+    console.log("Requesting API:", url);
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        },
+        cache: "no-store"
+    });
+
+    if (!response.ok) {
+        let detail = response.statusText;
+
+        try {
+            const errorData = await response.json();
+            detail = errorData.detail || detail;
+        } catch (error) {
+            // Use the HTTP status if response isn't JSON
+        }
+
+        throw new Error(
+            `${url}: HTTP ${response.status} - ${detail}`
+        );
+    }
+
+    return await response.json();
+}
+
+// Check whether API is running
+async function checkAPI() {
+    try {
+        await getJSON("/health");
+        setText("api-status", "API Connected");
+        return true;
+
+    } catch (error) {
+        console.error("API Connection Error:", error);
+        setText("api-status", "API Error");
+        return false;
+    }
+}
+
+// ========================================
+// 3. SIDEBAR NAVIGATION
+// ========================================
+
+function initializeNavigation() {
+    const navButtons = document.querySelectorAll(".nav-link");
+
+    navButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            document.querySelectorAll(".nav-link")
+                .forEach(nav => nav.classList.remove("active"));
+
+            document.querySelectorAll(".page")
+                .forEach(page => page.classList.remove("active"));
+
+            button.classList.add("active");
+
+            const pageId = button.dataset.page;
+            const page = document.getElementById(pageId);
+
+            if (page) {
+                page.classList.add("active");
+            }
+
+            const titles = {
+                overview: "Security Overview",
+                models: "Model Comparison",
+                graphs: "Evaluation Graphs",
+                dataset: "Dataset Explorer"
+            };
+
+            setText(
+                "page-title",
+                titles[pageId] || "SecureGuard AI"
+            );
+        });
+    });
+}
+
+// ========================================
+// 4. DRAW INTERACTIVE BAR CHARTS
+// ========================================
+
+function renderBars(containerId, items, percent = true) {
+    const container = document.getElementById(containerId);
+
+    if (!container) return;
+
+    container.replaceChildren();
+
+    if (!items || items.length === 0) {
+        container.textContent = "No chart data available.";
+        return;
+    }
+
+    const values = items.map(item => {
+        const number = Number(item.value);
+        return Number.isFinite(number) ? number : 0;
+    });
+
+    const maximum = percent
+        ? 100
+        : Math.max(...values, 1);
+
+    items.forEach(item => {
+
+        const rawValue = Number(item.value);
+        const value = Number.isFinite(rawValue)
+            ? rawValue
+            : 0;
+
+        const row = document.createElement("div");
+        row.className = "bar-item";
+
+        // Model name
+        const label = document.createElement("span");
+        label.className = "bar-label";
+        label.textContent = item.name;
+        label.title = item.name;
+
+        // Bar background
+        const track = document.createElement("div");
+        track.className = "bar-track";
+
+        // Colored bar
+        const fill = document.createElement("div");
+        fill.className = "bar-fill";
+
+        const normalized = percent && value <= 1
+            ? value * 100
+            : value;
+
+        const width = Math.min(
+            100,
+            Math.max(0, normalized / maximum * 100)
+        );
+
+        fill.style.width = `${width}%`;
+
+        track.appendChild(fill);
+
+        // Value display
+        const number = document.createElement("span");
+        number.className = "bar-value";
+
+        number.textContent = percent
+            ? formatPercent(item.value)
+            : value.toLocaleString();
+
+        row.append(label, track, number);
+
+        container.appendChild(row);
+    });
+}
+
+// ========================================
+// 5. MODEL COMPARISON TABLE
+// ========================================
+
+function renderModelTable() {
+    const tbody = document.getElementById("model-table");
+
+    if (!tbody) return;
+
+    tbody.replaceChildren();
+
+    if (modelData.length === 0) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+
+        cell.colSpan = 5;
+        cell.textContent = "No model results available.";
+
+        row.appendChild(cell);
+        tbody.appendChild(row);
+        return;
+    }
+
+    modelData.forEach(model => {
+
+        const row = document.createElement("tr");
+
+        const values = [
+            model.model,
+            formatPercent(model.accuracy),
+            formatPercent(model.precision),
+            formatPercent(model.recall),
+            formatPercent(model.f1)
+        ];
+
+        values.forEach(value => {
+
+            const td = document.createElement("td");
+
+            td.textContent = value ?? "N/A";
+
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
+    });
+}
+
+// ========================================
+// 6. MODEL PERFORMANCE GRAPHS
+// ========================================
+
+function renderModelChart(metric = "accuracy") {
+
+    const items = modelData.map(model => ({
+        name: model.model,
+        value: model[metric]
+    }));
+
+    renderBars("comparison-chart", items, true);
+}
+
+function initializeMetricSelection() {
+    const metricSelect = document.getElementById("metric-select");
+
+    if (!metricSelect) return;
+
+    metricSelect.addEventListener("change", event => {
+        renderModelChart(event.target.value);
+    });
+}
+
+// ========================================
+// 7. DATASET EXPLORER
+// ========================================
+
+function renderDataset(info) {
+    setText(
+        "dataset-rows",
+        Number(info.total_rows).toLocaleString()
+    );
+
+    setText("dataset-columns", info.total_columns);
+
+    const head = document.getElementById("dataset-head");
+    const body = document.getElementById("dataset-body");
+
+    if (!head || !body) return;
+
+    head.replaceChildren();
+    body.replaceChildren();
+
+    // Table header
+    const headerRow = document.createElement("tr");
+
+    info.columns.forEach(column => {
+        const th = document.createElement("th");
+        th.textContent = column;
+
+        headerRow.appendChild(th);
+    });
+
+    head.appendChild(headerRow);
+
+    // Dataset rows
+    info.preview.forEach(record => {
+
+        const row = document.createElement("tr");
+
+        info.columns.forEach(column => {
+
+            const td = document.createElement("td");
+
+            const value = record[column];
+
+            td.textContent = value === null ||
+                             value === undefined
+                ? ""
+                : String(value);
+
+            row.appendChild(td);
+        });
+
+        body.appendChild(row);
+    });
+}
+
+// ========================================
+// 8. LOAD DASHBOARD DATA
+// ========================================
+
+async function loadDashboard() {
+
+    const errorBox = document.getElementById("error-message");
+    const apiStatus = document.getElementById("api-status");
+
+    if (errorBox) {
+        errorBox.classList.add("hidden");
+    }
+
+    if (apiStatus) {
+        apiStatus.textContent = "Connecting...";
+    }
+
+    try {
+
+        // Load saved results from FastAPI
+        const [modelsResponse, dataResponse] = await Promise.all([
+            getJSON("/models"),
+            getJSON("/dataset")
+        ]);
+
+        modelData = modelsResponse.models || [];
+        datasetInfo = dataResponse;
+
+        if (modelData.length === 0) {
+            throw new Error("No trained model results found.");
+        }
+
+        // Find the highest accuracy model
+        const validModels = modelData.filter(model => {
+            return model.accuracy !== null &&
+                   model.accuracy !== undefined &&
+                   Number.isFinite(Number(model.accuracy));
+        });
+
+        const best = [...validModels].sort((a, b) => {
+            return Number(b.accuracy) - Number(a.accuracy);
+        })[0];
+
+        // Overview statistics
+        setText(
+            "total-records",
+            Number(dataResponse.total_rows).toLocaleString()
+        );
+
+        setText("total-models", modelData.length);
+
+        setText(
+            "best-accuracy",
+            best ? formatPercent(best.accuracy) : "--"
+        );
+
+        setText(
+            "best-model",
+            best ? best.model : "--"
+        );
+
+        // Accuracy comparison graph
+        renderBars(
+            "overview-chart",
+            modelData.map(model => ({
+                name: model.model,
+                value: model.accuracy
+            }))
+        );
+
+        // Network traffic distribution
+        const distribution = dataResponse.class_distribution || {};
+
+        renderBars(
+            "traffic-chart",
+            Object.entries(distribution).map(([name, value]) => ({
+                name: name,
+                value: value
+            })),
+            false
+        );
+
+        // Model comparison
+        renderModelTable();
+
+        const metricSelect = document.getElementById("metric-select");
+
+        renderModelChart(
+            metricSelect ? metricSelect.value : "accuracy"
+        );
+
+        // Dataset preview
+        renderDataset(dataResponse);
+
+        // Successfully connected
+        if (apiStatus) {
+            apiStatus.textContent = "API Connected";
+        }
+
+        console.log("SecureGuard AI loaded successfully.");
+
+    } catch (error) {
+
+        console.error("Dashboard Error:", error);
+
+        if (apiStatus) {
+            apiStatus.textContent = "API Error";
+        }
+
+        if (errorBox) {
+            errorBox.textContent =
+                "Unable to load dashboard: " + error.message;
+
+            errorBox.classList.remove("hidden");
+        }
+    }
+}
+
+// ========================================
+// 9. REFRESH DASHBOARD AND GRAPHS
+// ========================================
+
+function refreshDashboard() {
+
+    loadDashboard();
+
+    // Refresh graph images
+    document.querySelectorAll(".graphs-grid img")
+        .forEach(img => {
+
+            const baseURL = img.src.split("?")[0];
+
+            img.src = `${baseURL}?v=${Date.now()}`;
+        });
+}
+
+function initializeRefreshButton() {
+
+    const refreshButton = document.getElementById("refresh-btn");
+
+    if (refreshButton) {
+        refreshButton.addEventListener(
+            "click",
+            refreshDashboard
+        );
+    }
+}
+
+// ========================================
+// 10. START APPLICATION
+// ========================================
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    console.log("Starting SecureGuard AI...");
+
+    initializeNavigation();
+    initializeMetricSelection();
+    initializeRefreshButton();
+
+    await checkAPI();
+
+    await loadDashboard();
+});
+
+</script>
+</body>
+</html>
